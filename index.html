@@ -3,48 +3,22 @@
 <head>
   <meta charset="utf-8">
   <title>2D EVOLUTION</title>
-  <meta name="description" content="45 лет 2D-игр в стиле Cyber-NEON">
+  <meta name="description" content="45 лет 2D-игр в cyber-неоне. Таймлайн, галерея, PWA">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="manifest" href="data:application/json,{&quot;name&quot;:&quot;2D EVOLUTION&quot;,&quot;short_name&quot;:&quot;2D Evo&quot;,&quot;icons&quot;:[{&quot;src&quot;:&quot;https://i.imgur.com/8N8SpBf.png&quot;,&quot;sizes&quot;:&quot;192x192&quot;,&quot;type&quot;:&quot;image/png&quot;}],&quot;start_url&quot;:&quot;/&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#000&quot;,&quot;theme_color&quot;:&quot;#00f2ff&quot;}">
   <style>
-    :root{
-      --bg:#000;
-      --pane:#0a0a0a;
-      --neon1:#00f2ff;
-      --neon2:#ff00c8;
-      --text:#e4e4e4;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial;
-      scroll-behavior:smooth
-    }
+    :root{--bg:#000;--pane:#0a0a0a;--neon1:#00f2ff;--neon2:#ff00c8;--text:#e4e4e4;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial;scroll-behavior:smooth}
     *{box-sizing:border-box;margin:0}
     body{background:var(--bg);color:var(--text)}
-    header{
-      height:100vh;
-      background:linear-gradient(135deg,var(--neon1),var(--neon2));
-      display:flex;align-items:center;justify-content:center;
-      position:relative;overflow:hidden
-    }
+    header{height:100vh;background:linear-gradient(135deg,var(--neon1),var(--neon2));display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
     header::before{content:"";position:absolute;inset:0;background:url(https://i.imgur.com/8N8SpBf.gif) center/cover no-repeat;mix-blend-mode:multiply;opacity:.3}
     h1{position:relative;z-index:2;font-size:12vw;font-weight:900;letter-spacing:.1em;background:var(--bg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px var(--neon1)}
     section{padding:4rem 1rem;max-width:1100px;margin:auto}
     h2{margin-bottom:1.5rem;font-size:2rem;font-weight:800;background:linear-gradient(90deg,var(--neon1),var(--neon2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    /* неон-кнопки */
-    .neon-btn{
-      background:transparent;
-      border:2px solid var(--neon1);
-      color:var(--neon1);
-      padding:14px 28px;
-      font-weight:700;
-      border-radius:6px;
-      box-shadow:0 0 15px var(--neon1), inset 0 0 5px var(--neon1);
-      transition:.3s;
-      cursor:pointer;
-      margin:.25rem
-    }
+    .neon-btn{background:transparent;border:2px solid var(--neon1);color:var(--neon1);padding:14px 28px;font-weight:700;border-radius:6px;box-shadow:0 0 15px var(--neon1), inset 0 0 5px var(--neon1);transition:.3s;cursor:pointer;margin:.25rem}
     .neon-btn:hover{background:#00f2ff22;box-shadow:0 0 30px var(--neon1), inset 0 0 10px var(--neon1)}
     .neon-btn.pink{border-color:var(--neon2);color:var(--neon2);box-shadow:0 0 15px var(--neon2), inset 0 0 5px var(--neon2)}
     .neon-btn.pink:hover{background:#ff00c822;box-shadow:0 0 30px var(--neon2), inset 0 0 10px var(--neon2)}
-    /* слайдер */
     .slider{display:flex;align-items:center;gap:.5rem;margin:1.5rem 0}
     .years{flex:1;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
     .years::-webkit-scrollbar{display:none}
@@ -53,13 +27,10 @@
     .year active{border-color:var(--neon2)}
     .info{margin-top:1.5rem;padding:1.2rem;background:#00000066;border-left:4px solid var(--neon1);border-radius:6px;font-size:.95rem;display:none}
     .info.show{display:block}
-    /* галерея */
     .gallery{display:flex;overflow-x:auto;gap:12px;padding:1rem 0}
     .gallery img{height:160px;border-radius:8px;border:2px solid transparent;transition:.3s;filter:grayscale(.3)}
     .gallery img:hover{border-color:var(--neon1);transform:scale(1.05);filter:none}
-    /* футер */
     footer{text-align:center;padding:2.5rem .5rem;font-size:.8rem;color:#555}
-    /* адаптив */
     @media(max-width:600px){.year{flex:0 0 45%}.gallery img{height:120px}}
   </style>
 </head>
@@ -96,15 +67,28 @@
 <script>
   const yearsData=[
     {y:1980,txt:"1980",info:"Pac-Man, Space Invaders – 8×4 спрайты, 4 цвета. Родились AI врагов и монетки."},
+    {y:1983,txt:"1983",info:"Mario Bros. – кооп на одном экране, джойстик Atari, первые пауэр-апы."},
     {y:1985,txt:"1985",info:"Super Mario Bros. – side-scroll, физика прыжка, коды Конами. Начало NES-эры."},
-    {y:1990,txt:"1990",info:"Sonic, Mario World – 256 цветов, PCM-звук, Mode-7. Параллакс и beat-’em-up."},
-    {y:1995,txt:"1995",info:"Donkey Kong Country –预рендер, Super Mario RPG – изометрия. CD-саунд."},
-    {y:2000,txt:"2000",info:"Flash-игры, Newgrounds, векторная 2D, пиксель-арт возвращается."},
-    {y:2005,txt:"2005",info:"LocoRoco – 2D soft-body, Portal Flash – порталы в 2D. Xbox Live Arcade."},
-    {y:2010,txt:"2010",info:"Super Meat Boy, Limbo – цифро-релизы, Kickstarter, HD-пиксель."},
-    {y:2015,txt:"2015",info:"FEZ, Ori – 3D-свет на 2D, normal-map, 60 fps на всём."},
-    {y:2020,txt:"2020",info:"Dead Cells, Hollow Knight – HDR-спрайты, procedural anim, 120 fps."},
-    {y:2025,txt:"2025",info:"Ultros, Animal Well – hand-drawn + AI, 4K, 240 fps OLED."}
+    {y:1987,txt:"1987",info:"Contra – Run-&-gun, код 30 жизней, двухплеер. Родились «боссы»."},
+    {y:1989,txt:"1989",info:"Tetris (Game Boy) – 35 млн копий, музыка A-Type, портативный пазл."},
+    {y:1991,txt:"1991",info:"Sonic – 16-бит, бласт-процессинг, параллакс. Маркетинг Sega vs Nintendo."},
+    {y:1993,txt:"1993",info:"Street Fighter II Turbo – комбо, соревновательный мультиплеер, первый турнирный джойстик."},
+    {y:1995,txt:"1995",info:"Donkey Kong Country –预рендер 3D на 2D, 32-бит текстуры, CD-саунд."},
+    {y:1997,txt:"1997",info:"Castlevania: Symphony of the Night – метроидвания, RPG-элементы, 2.5D."},
+    {y:1999,txt:"1999",info:"Silent Hill (GBC) – хоррор на 8-бит, изометрия, психологический сюжет."},
+    {y:2001,txt:"2001",info:"Advance Wars – пошаговая стратегия, яркий пиксель, мультиплеер по кабелю."},
+    {y:2003,txt:"2003",info:"WarioWare, Inc. – микроигры 5 секунд, тейст-мейкер, тач-экран GBA."},
+    {y:2005,txt:"2005",info:"LocoRoco – 2D + soft-body physics, OLED-экран PSP, стерео-звук."},
+    {y:2007,txt:"2007",info:"Castle Crashers – 4-player кооп, Flash-рынок → Xbox Live Arcade, HD-пиксель."},
+    {y:2009,txt:"2009",info:"Canabalt – бесконечный раннер, один-буттон, iPhone-дебют."},
+    {y:2011,txt:"2011",info:"Superbrothers: Sword & Sworcery – пиксель-арт + саунд-дизайн, тач-контроль iPad."},
+    {y:2013,txt:"2013",info:"Rogue Legacy – роглайк-платформер, наследие, процедурные комнаты."},
+    {y:2015,txt:"2015",info:"Undertale – метанарратив, выбор не убивать, саундтрек на топах Spotify."},
+    {y:2017,txt:"2017",info:"Cuphead – hand-drawn 1930-е, 1.2D + 4K, 60 fps на Switch."},
+    {y:2019,txt:"2019",info:"Katana ZERO – пиксель-арт, замедление времени, synthwave, наркотический сюжет."},
+    {y:2021,txt:"2021",info:"Hollow Knight: Silksong (ожидание) – самое ожидаемое инди-2D, 240 fps на OLED."},
+    {y:2023,txt:"2023",info:"Pizza Tower – мгновенная скорость, Wario-Land-механики, 120 fps."},
+    {y:2025,txt:"2025",info:"Ultros – hand-drawn + AI, 4K-спрайты, ray-tracing на спрайтах, 240 fps OLED."}
   ];
 
   const years=document.getElementById('years');
@@ -126,6 +110,10 @@
   }
 
   const posters=[
+    "https://i.imgur.com/8N8SpBf.png","https://i.imgur.com/lS8gjBV.png","https://i.imgur.com/8Xy0dLc.png",
+    "https://i.imgur.com/8N8SpBf.png","https://i.imgur.com/lS8gjBV.png","https://i.imgur.com/8Xy0dLc.png",
+    "https://i.imgur.com/8N8SpBf.png","https://i.imgur.com/lS8gjBV.png","https://i.imgur.com/8Xy0dLc.png",
+    "https://i.imgur.com/8N8SpBf.png","https://i.imgur.com/lS8gjBV.png","https://i.imgur.com/8Xy0dLc.png",
     "https://i.imgur.com/8N8SpBf.png","https://i.imgur.com/lS8gjBV.png","https://i.imgur.com/8Xy0dLc.png",
     "https://i.imgur.com/8N8SpBf.png","https://i.imgur.com/lS8gjBV.png","https://i.imgur.com/8Xy0dLc.png",
     "https://i.imgur.com/8N8SpBf.png","https://i.imgur.com/lS8gjBV.png"
