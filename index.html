@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>История 2D-игр</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    :root{--bg:#111;--accent:#00f2ff;--text:#eee;font-family:Arial,Helvetica,sans-serif}
+    body{margin:0;background:var(--bg);color:var(--text);line-height:1.5}
+    header{height:40vh;background:url(https://i.giphy.com/media/xT9IgG50FbHNi8pFzW/giphy.gif) center/cover no-repeat;display:flex;align-items:center;justify-content:center;font-size:8vw;text-shadow:0 0 10px var(--accent);color:#fff}
+    section{padding:2rem 1rem;max-width:900px;margin:auto}
+    h2{color:var(--accent);margin-top:0}
+    /* шкала лет */
+    .timeline{position:relative;padding:1rem 0}
+    .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--accent)}
+    .year{position:relative;margin:1.5rem 0;cursor:pointer}
+    .year span{display:inline-block;background:var(--accent);color:#000;padding:.3rem .8rem;border-radius:4px;font-weight:bold}
+    .card{display:none;background:#222;padding:1rem;border-left:4px solid var(--accent);margin:.5rem 0}
+    .year:hover .card{display:block}
+    /* галерея */
+    .gallery{display:flex;flex-wrap:wrap;gap:8px}
+    .gallery img{width:calc(20% - 8px);min-width:100px;border-radius:4px;transition:.3s}
+    .gallery img:hover{transform:scale(1.1)}
+    footer{text-align:center;padding:2rem;font-size:.8rem;color:#666}
+  </style>
+</head>
+<body>
+
+<header>2D-игры: 45 лет эволюции</header>
+
+<section>
+  <h2>Интерактивная шкала</h2>
+  <div class="timeline">
+    <div class="year"><span>1980</span>
+      <div class="card">Pac-Man — первый культовый 2D-экшен, 300 000 автоматов по миру.</div>
+    </div>
+    <div class="year"><span>1985</span>
+      <div class="card">Super Mario Bros. задаёт каноны сайд-скроллинга и физики платформеров.</div>
+    </div>
+    <div class="year"><span>1991</span>
+      <div class="card">Sonic the Hedgehog — бласт-процессинг и параллакс-фон в 16-бит.</div>
+    </div>
+    <div class="year"><span>1996</span>
+      <div class="card">Super Mario RPG — псевдо-3D спрайты на SNES (зачаток 1.2D).</div>
+    </div>
+    <div class="year"><span>2004</span>
+      <div class="card">World of Goo — физика + 2D-вектор, рождение современных инди.</div>
+    </div>
+    <div class="year"><span>2012</span>
+      <div class="card">FEZ — 2D/3D-поворот мира, 1.2D как механика головоломки.</div>
+    </div>
+    <div class="year"><span>2018</span>
+      <div class="card">Dead Cells — пиксель-арт + 3D-освещение, 60 fps на Switch.</div>
+    </div>
+    <div class="year"><span>2025</span>
+      <div class="card">Инди-рынок 2D превысил $3 млрд; тренд — hand-drawn + AI-анимация.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Галерея культовых 2D-игр</h2>
+  <div class="gallery">
+    <img src="https://upload.wikimedia.org/wikipedia/en/9/9c/Pac-Man_2600_box_art.jpg" alt="Pac-Man">
+    <img src="https://upload.wikimedia.org/wikipedia/en/0/03/Super_Mario_Bros._box.png" alt="SMB">
+    <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Sonic_the_Hedgehog_1_Genesis_box_art.jpg" alt="Sonic">
+    <img src="https://upload.wikimedia.org/wikipedia/en/5/5f/FEZ_cover_art.png" alt="FEZ">
+    <img src="https://upload.wikimedia.org/wikipedia/en/c/c4/Dead_Cells_cover_art.jpg" alt="Dead Cells">
+    <img src="https://upload.wikimedia.org/wikipedia/en/6/6b/Ori_and_the_Blind_Forest_cover.png" alt="Ori">
+    <img src="https://upload.wikimedia.org/wikipedia/en/4/4f/Celeste_cover_art.png" alt="Celeste">
+    <img src="https://upload.wikimedia.org/wikipedia/en/7/7d/Hollow_Knight_cover_art.jpg" alt="Hollow Knight">
+  </div>
+</section>
+
+<section>
+  <h2>Технологический путь</h2>
+  <ul>
+    <li><b>1980-е:</b> спрайтовые примитивы, 8 × 8 пикселей, 4 цвета.</li>
+    <li><b>1990-е:</b> Mode-7, параллакс, 256 цветов, PCM-саунд.</li>
+    <li><b>2000-е:</b> Flash-игры, векторная 2D-графика, онлайн-распространение.</li>
+    <li><b>2010-е:</b> 1.2D-эффекты (normal-map, 3D-свет на 2D-спрайтах).</li>
+    <li><b>2020-е:</b> AI-апскейл пиксель-арта, вектор-анимация 120 fps, HDR-спрайты.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Будущее 2D</h2>
+  <p>Рост рынка мобильных премиум-игр, гибрид 2D + ray-tracing, инструменты «0-код» (GDevelop, Pixel Game Maker). 2D никуда не уходит — она становится стильной нишей с бюджетами AAA-уровня.</p>
+</section>
+
+<footer>
+  2025 · Сделано для iPhone · Источники: GDC talks, VGInsights, Wiki
+</footer>
+
+</body>
+</html>
