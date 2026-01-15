@@ -2,181 +2,126 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <title>2D-игры: 45 лет эволюции</title>
+  <title>2D Evolution | 45 лет 2D-игр</title>
+  <meta name="description" content="Интерактивная тайм-линия 2D-игр: от Pac-Man до Ultros. Слайдер, галерея, PWA">
+  <meta name="keywords" content="2D games, indie, pixel art, gamedev">
+  <meta property="og:title" content="2D Evolution">
+  <meta property="og:description" content="45 лет эволюции 2D-игр в одном современном сайте">
+  <meta property="og:image" content="https://i.imgur.com/8N8SpBf.png">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="manifest" href="data:application/json,{&quot;name&quot;:&quot;2D Evolution&quot;,&quot;short_name&quot;:&quot;2D Evo&quot;,&quot;icons&quot;:[{&quot;src&quot;:&quot;https://i.imgur.com/8N8SpBf.png&quot;,&quot;sizes&quot;:&quot;192x192&quot;,&quot;type&quot;:&quot;image/png&quot;}],&quot;start_url&quot;:&quot;/&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#0a0a0a&quot;,&quot;theme_color&quot;:&quot;#00ffaa&quot;}">
   <style>
-    :root{
-      --bg:#0d1117;--card:#161b22;--accent:#00f2ff;--text:#e6edf3;
-      --grad:linear-gradient(135deg,#00f2ff,#ff00c8)
-    }
-    *{box-sizing:border-box;margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial}
-    body{background:var(--bg);color:var(--text);line-height:1.6}
-    header{
-      height:50vh;background:url(https://i.giphy.com/media/xT9IgG50FbHNi8pFzW/giphy.gif) center/cover no-repeat;
-      display:flex;align-items:center;justify-content:center;font-size:10vw;text-shadow:0 0 15px var(--accent);color:#fff;
-      position:relative;overflow:hidden
-    }
-    header::after{content:'';position:absolute;inset:0;background:var(--grad);opacity:.15}
-    section{padding:2rem 1rem;max-width:1000px;margin:auto}
-    h2{font-size:1.8rem;margin:.5em 0 .2em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    /* live-search */
-    #search{width:100%;padding:.7rem 1rem;font-size:1rem;border:2px solid var(--accent);border-radius:30px;background:var(--card);color:var(--text);margin-bottom:1.5rem}
-    /* timeline */
-    .timeline{position:relative;padding:1rem 0}
-    .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--accent)}
-    .year{position:relative;margin:2rem 0;cursor:pointer;transform:translateX(-50%)}
-    .year span{display:inline-block;background:var(--grad);color:#000;padding:.4rem .9rem;border-radius:20px;font-weight:bold}
-    .card{display:none;position:absolute;left:50%;top:0;transform:translateX(-50%);width:260px;background:var(--card);border:1px solid var(--accent);border-radius:8px;padding:1rem;font-size:.9rem;z-index:10}
-    .year:hover .card{display:block}
-    /* gallery */
-    .gallery{display:flex;flex-wrap:wrap;gap:10px}
-    .gallery img{width:calc(20% - 10px);min-width:110px;border-radius:8px;transition:.3s;filter:grayscale(.3)}
-    .gallery img:hover{transform:scale(1.08);filter:none}
-    /* tech */
-    .tech{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem}
-    .tech div{background:var(--card);padding:1.2rem;border-left:4px solid var(--accent);border-radius:6px}
-    footer{text-align:center;padding:2.5rem .5rem;font-size:.8rem;color:#8b949e}
-    /* адаптив */
-    @media(max-width:600px){
-      .timeline::before{left:20px}
-      .year{left:20px;transform:none}
-      .card{left:20px;width:calc(100vw - 60px)}
-      .gallery img{width:calc(50% - 10px)}
-    }
+    :root{--bg:#0a0a0a;--pane:#111;--accent:#00ffaa;--text:#e4e4e4;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial}
+    *{box-sizing:border-box;margin:0}
+    body{background:var(--bg);color:var(--text)}
+    header{height:45vh;background:url(https://i.imgur.com/8N8SpBf.gif) center/cover no-repeat;position:relative;display:flex;align-items:center;justify-content:center}
+    header::after{content:"";position:absolute;inset:0;background:#000000aa}
+    h1{position:relative;z-index:2;font-size:8vw;letter-spacing:.05em;background:linear-gradient(90deg,var(--accent),#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    section{padding:3rem 1rem;max-width:900px;margin:auto}
+    h2{margin-bottom:1rem;font-weight:600;font-size:1.4rem;color:var(--accent)}
+    .slider{display:flex;align-items:center;gap:.5rem}
+    .years{flex:1;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+    .years::-webkit-scrollbar{display:none}
+    .year{flex:0 0 28%;scroll-snap-align:start;background:var(--pane);border:1px solid #222;border-radius:8px;padding:1rem;text-align:center;cursor:pointer;transition:.3s}
+    .year:hover{border-color:var(--accent);transform:translateY(-3px)}
+    .info{margin-top:1.2rem;padding:1rem;background:#00000066;border-left:3px solid var(--accent);border-radius:4px;font-size:.95rem;display:none}
+    .info.show{display:block}
+    .gallery{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.5rem}
+    .gallery img{width:calc(20% - 8px);min-width:100px;border-radius:6px;transition:.3s;filter:grayscale(.2);loading:lazy}
+    .gallery img:hover{transform:scale(1.05);filter:none}
+    #sound{position:fixed;bottom:20px;right:20px;width:50px;height:50px;background:var(--pane);border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;z-index:100}
+    footer{text-align:center;padding:2rem .5rem;font-size:.75rem;color:#777}
+    @media(max-width:600px){.year{flex:0 0 40%}.gallery img{width:calc(50% - 8px)}}
   </style>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+    gtag('js',new Date());gtag('config','G-XXXXXXXXXX')
+  </script>
 </head>
 <body>
 
-<header>2D-игры: 45 лет эволюции</header>
+<header><h1>2D Evolution</h1></header>
 
 <section>
-  <input id="search" placeholder="Поиск по играм (название или год)">
+  <h2>Годы и перемены</h2>
+  <div class="slider">
+    <button onclick="slide(-1)">‹</button>
+    <div class="years" id="years"></div>
+    <button onclick="slide(1)">›</button>
+  </div>
+  <div class="info" id="info"></div>
 </section>
 
 <section>
-  <h2>Интерактивная шкала</h2>
-  <div class="timeline" id="timeline"></div>
-</section>
-
-<section>
-  <h2>Галерея культовых 2D-игр</h2>
+  <h2>Культовые игры в лицах</h2>
   <div class="gallery" id="gallery"></div>
 </section>
 
-<section class="tech">
-  <div>
-    <h3>1980-е</h3>
-    <p>Спрайты 8×8, 4 цвета, картриджи. Культовые аркады: Pac-Man, Donkey Kong, Super Mario Bros.</p>
-  </div>
-  <div>
-    <h3>1990-е</h3>
-    <p>Mode-7, параллакс, 256 цветов, PCM-звук. Sonic, Street Fighter, Final Fantasy.</p>
-  </div>
-  <div>
-    <h3>2000-е</h3>
-    <p>Flash-игры, векторная 2D-графика, онлайн-распространение. Появление инди.</p>
-  </div>
-  <div>
-    <h3>2010-е</h3>
-    <p>1.2D-эффекты (normal-map, 3D-свет на 2D-спрайтах), ретро-бум. FEZ, Ori, Dead Cells.</p>
-  </div>
-  <div>
-    <h3>2020-е</h3>
-    <p>AI-апскейл, HDR-спрайты, 120 fps на Switch. Хиты: Celeste, Hollow Knight, Pizza Tower.</p>
-  </div>
-  <div>
-    <h3>2025+</h3>
-    <p>Рост мобильных премиум-2D, hand-drawn + AI-анимация, ray-tracing на спрайтах.</p>
-  </div>
+<section>
+  <h2>Мои 2D-проекты</h2>
+  <p>Скоро здесь появятся мои собственные пиксель-игры. Подпишись на обновления!</p>
 </section>
 
 <footer>
-  2025 · Обновлено для iPhone · Источники: GDC, VGInsights, Wiki
+  <a href="https://github.com/Pulse111-art/2d-gamess" target="_blank">GitHub</a> ·
+  <a href="mailto:you@2dgames.site">Связаться</a>
 </footer>
 
+<div id="sound" onclick="toggleSound()">🔊</div>
+
 <script>
-  const data=[
-    {y:1980,t:"Pac-Man",d:"Первый культовый 2D-экшен, 300 000 автоматов по миру."},
-    {y:1981,t:"Donkey Kong",d:"Дебют Марио, первый платформер с прыжками."},
-    {y:1983,t:"Mario Bros.",d:"Появление брата Луиджи, кооператив на одном экране."},
-    {y:1985,t:"Super Mario Bros.",d:"Каноны сайд-скроллинга и физики платформеров."},
-    {y:1986,t:"The Legend of Zelda",d:"Открытый мир сверху, первое сохранение."},
-    {y:1987,t:"Contra",d:"Run-and-gun с кодом «Конами», 30 жизней."},
-    {y:1988,t:"Mega Man 2",d:"Выбор уровней, музыка 8-бит, культ боссов."},
-    {y:1989,t:"Tetris (Game Boy)",d:"Пазл-гигант, 35 млн копий, музыка A-Type."},
-    {y:1990,t:"Super Mario World",d:"Появление Йоши, 96 уровней, Mode-7."},
-    {y:1991,t:"Sonic the Hedgehog",d:"Бласт-процессинг, параллакс, 16-бит."},
-    {y:1992,t:"Mortal Kombat",d:"Жёсткие фэтэлтис, первый ЭБУ в домашних версиях."},
-    {y:1993,t:"Street Fighter II Turbo",d:"Комбо, соревновательный мультиплеер."},
-    {y:1994,t:"Donkey Kong Country",d:"Псевдо-3D спрайты,预рендеренная графика."},
-    {y:1995,t:"Chrono Trigger",d:"Несколько концовок, активное время боя."},
-    {y:1996,t:"Super Mario RPG",d:"Псевдо-3D на SNES, зачаток 1.2D."},
-    {y:1997,t:"Castlevania: SotN",d:"Метроидвания, RPG-элементы, 2.5D."},
-    {y:1998,t:"Metal Slug",d:"Пиксель-арт уровня аркады, 60 fps."},
-    {y:1999,t:"Silent Hill (GBC)",d:"Хоррор на 8-бит, изометрия."},
-    {y:2001,t:"Advance Wars",d:"Пошаговая стратегия, яркий пиксель."},
-    {y:2002,t:"Metroid Fusion",d:"Линейная метроидвания, цифровой звук."},
-    {y:2003,t:"WarioWare, Inc.",d:"Микроигры 5 секунд, тейст-мейкер."},
-    {y:2004,t:"World of Goo",d:"Физика + 2D-вектор, рождение современных инди."},
-    {y:2006,t:"LocoRoco",d:"Деформируемый мир, 2D + физика."},
-    {y:2007,t:"Castle Crashers",d:"4-player кооп, Flash-рынок → Xbox Live."},
-    {y:2008,t:"Braid",d:"Перемотка времени, первый большой инди-хит на консолях."},
-    {y:2009,t:"Canabalt",d:"Бесконечный раннер, один-буттон."},
-    {y:2010,t:"Limbo",d:"Монохром, хоррор-платформер."},
-    {y:2011,t:"Superbrothers: Sword & Sworcery",d:"Пиксель-арт + саунд-дизайн, тач-контроль."},
-    {y:2012,t:"FEZ",d:"2D/3D-поворот мира, 1.2D как головоломка."},
-    {y:2013,t:"Rogue Legacy",d:"Роглайк-платформер, наследие."},
-    {y:2014,t:"Shovel Knight",d:"Ностальгия NES, Kickstarter-рекорд."},
-    {y:2015,t:"Undertale",d:"Метанарратив, выбор не убивать."},
-    {y:2016,t:"Hyper Light Drifter",d:"16-бит эстетика, 60 fps, эпилептические боссы."},
-    {y:2017,t:"Cuphead",d:"Hand-drawn 1930-е, 1.2D + 4K."},
-    {y:2018,t:"Dead Cells",d:"Роглайк-метроидвания, 3D-свет на 2D-спрайтах."},
-    {y:2019,t:"Katana ZERO",d:"Пиксель-арт, замедление времени, synthwave."},
-    {y:2020,t:"Ori and the Will of the Wisps",d:"60 fps на Switch, HDR-спрайты."},
-    {y:2021,t:"Hollow Knight: Silksong (ожидание)",d:"Самое ожидаемое инди-2D."},
-    {y:2022,t:"Pizza Tower",d:"Мгновенная скорость, Wario-Land-механики."},
-    {y:2023,t:"Blasphemous 2",d:"Hand-drawn пиксель, метроидвания."},
-    {y:2024,t:"Animal Well",d:"Пиксель-хоррор, 4-слойный параллакс."},
-    {y:2025,t:"Ultros",d:"Психоделический hand-drawn, 1.2D + ray-tracing."}
+  const yearsData=[
+    {y:1980,txt:"Рождение аркадного золота",info:"Pac-Man, Space Invaders – монетки, 8×8 спрайты, 4 цвета. Заложены основы AI врагов и UI."},
+    {y:1985,txt:"Коды, джойстики, скроллинг",info:"Super Mario Bros. – первый side-scroll, физика прыжка, коды Конами. Начало NES-эры."},
+    {y:1990,txt:"16-бит, параллакс, Mode-7",info:"Sonic, Super Mario World – 256 цветов, PCM-звук, вращение фона. Рождение жанра beat-’em-up."},
+    {y:1995,txt:"Псевдо-3D на 2D",info:"Donkey Kong Country –预рендер, Super Mario RPG – изометрия+спрайты. CD-саундтреки."},
+    {y:2000,txt:"Flash-революция",info:"Newgrounds, Kongregate – бесплатные браузерные 2D, векторная графика, пиксель-арт возвращается."},
+    {y:2005,txt:"HD-2D, порталы, физика",info:"LocoRoco – 2D + soft-body, Portal: The Flash Version – порталы в 2D. Xbox Live Arcade."},
+    {y:2010,txt:"Инди-бум",info:"Super Meat Boy, Limbo – цифровая дистрибуция, Kickstarter, ретро-эстетика в HD."},
+    {y:2015,txt:"1.2D + нормальные карты",info:"FEZ, Ori – 3D-свет на 2D-спрайтах, нормал-мапы, 60 fps на всех платформах."},
+    {y:2020,txt:"AI-апскейл, 120 fps",info:"Dead Cells, Hollow Knight – HDR-спрайты, procedural анимация, 1.2D-ray-tracing на Switch."},
+    {y:2025,txt:"Рей-трейсинг и hand-drawn AI",info:"Ultros, Animal Well – hand-drawn кадры, AI-инбетвининг, 4K-спрайты, 240 fps на OLED."}
   ];
 
-  const tl=document.getElementById('timeline');
-  const gl=document.getElementById('gallery');
-  const search=document.getElementById('search');
-
-  function render(list){
-    tl.innerHTML='';
-    list.forEach(o=>{
-      const y=document.createElement('div');y.className='year';
-      y.innerHTML=`<span>${o.y}</span><div class="card"><b>${o.t}</b><br>${o.d}</div>`;
-      tl.appendChild(y);
+  const years=document.getElementById('years');
+  const info=document.getElementById('info');
+  function render(){
+    years.innerHTML='';
+    yearsData.forEach((o,i)=>{
+      const div=document.createElement('div');div.className='year';
+      div.innerHTML=`<strong>${o.y}</strong><br><small>${o.txt}</small>`;
+      div.onclick=()=>{info.innerHTML=`<b>${o.y}</b> – ${o.info}`;info.classList.add('show')};
+      years.appendChild(div);
     })
   }
-  render(data);
+  render();info.classList.add('show');
 
-  // live search
-  search.addEventListener('input',()=>{
-    const q=search.value.trim().toLowerCase();
-    render(data.filter(o=>o.t.toLowerCase().includes(q)||String(o.y).includes(q)))
-  });
+  function slide(dir){
+    const cont=years;const scroll=cont.clientWidth;
+    cont.scrollBy({left:dir*scroll,behavior:'smooth'})
+  }
 
-  // gallery
   const posters=[
-    "https://upload.wikimedia.org/wikipedia/en/9/9c/Pac-Man_2600_box_art.jpg",
-    "https://upload.wikimedia.org/wikipedia/en/0/03/Super_Mario_Bros._box.png",
-    "https://upload.wikimedia.org/wikipedia/en/b/ba/Sonic_the_Hedgehog_1_Genesis_box_art.jpg",
-    "https://upload.wikimedia.org/wikipedia/en/5/5f/FEZ_cover_art.png",
-    "https://upload.wikimedia.org/wikipedia/en/c/c4/Dead_Cells_cover_art.jpg",
-    "https://upload.wikimedia.org/wikipedia/en/6/6b/Ori_and_the_Blind_Forest_cover.png",
-    "https://upload.wikimedia.org/wikipedia/en/4/4f/Celeste_cover_art.png",
-    "https://upload.wikimedia.org/wikipedia/en/7/7d/Hollow_Knight_cover_art.jpg",
-    "https://upload.wikimedia.org/wikipedia/en/9/9d/Cuphead_cover_art.jpg",
-    "https://upload.wikimedia.org/wikipedia/en/0/0f/Katana_ZERO_cover_art.jpg"
+    "https://i.imgur.com/8N8SpBf.png","https://i.imgur.com/lS8gjBV.png","https://i.imgur.com/8Xy0dLc.png",
+    "https://i.imgur.com/8N8SpBf.png","https://i.imgur.com/lS8gjBV.png","https://i.imgur.com/8Xy0dLc.png",
+    "https://i.imgur.com/8N8SpBf.png","https://i.imgur.com/lS8gjBV.png"
   ];
-  posters.forEach(p=>{
-    const img=new Image();img.src=p;img.loading='lazy';
-    gl.appendChild(img);
-  });
+  const gal=document.getElementById('gallery');
+  posters.forEach(p=>{const img=new Image();img.src=p;img.loading='lazy';gal.appendChild(img)});
+
+  let audioON=false;
+  function toggleSound(){
+    audioON=!audioON;
+    document.getElementById('sound').textContent=audioON?'🔇':'🔊';
+    if(audioON){
+      const ctx=new AudioContext(),o=ctx.createOscillator(),g=ctx.createGain();
+      o.type='square';o.frequency.value=200;g.gain.value=0.05;
+      o.connect(g).connect(ctx.destination);o.start();
+      setTimeout(()=>{o.stop()},150)
+    }
+  }
 </script>
 </body>
 </html>
