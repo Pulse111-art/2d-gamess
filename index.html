@@ -2,87 +2,109 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <title>2D Evolution | 45 лет 2D-игр</title>
-  <meta name="description" content="Интерактивная тайм-линия 2D-игр: от Pac-Man до Ultros. Слайдер, галерея, PWA">
-  <meta name="keywords" content="2D games, indie, pixel art, gamedev">
-  <meta property="og:title" content="2D Evolution">
-  <meta property="og:description" content="45 лет эволюции 2D-игр в одном современном сайте">
-  <meta property="og:image" content="https://i.imgur.com/8N8SpBf.png">
+  <title>2D EVOLUTION</title>
+  <meta name="description" content="45 лет 2D-игр в стиле Cyber-NEON">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="manifest" href="data:application/json,{&quot;name&quot;:&quot;2D Evolution&quot;,&quot;short_name&quot;:&quot;2D Evo&quot;,&quot;icons&quot;:[{&quot;src&quot;:&quot;https://i.imgur.com/8N8SpBf.png&quot;,&quot;sizes&quot;:&quot;192x192&quot;,&quot;type&quot;:&quot;image/png&quot;}],&quot;start_url&quot;:&quot;/&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#0a0a0a&quot;,&quot;theme_color&quot;:&quot;#00ffaa&quot;}">
+  <link rel="manifest" href="data:application/json,{&quot;name&quot;:&quot;2D EVOLUTION&quot;,&quot;short_name&quot;:&quot;2D Evo&quot;,&quot;icons&quot;:[{&quot;src&quot;:&quot;https://i.imgur.com/8N8SpBf.png&quot;,&quot;sizes&quot;:&quot;192x192&quot;,&quot;type&quot;:&quot;image/png&quot;}],&quot;start_url&quot;:&quot;/&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;#000&quot;,&quot;theme_color&quot;:&quot;#00f2ff&quot;}">
   <style>
-    :root{--bg:#0a0a0a;--pane:#111;--accent:#00ffaa;--text:#e4e4e4;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial}
+    :root{
+      --bg:#000;
+      --pane:#0a0a0a;
+      --neon1:#00f2ff;
+      --neon2:#ff00c8;
+      --text:#e4e4e4;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial;
+      scroll-behavior:smooth
+    }
     *{box-sizing:border-box;margin:0}
     body{background:var(--bg);color:var(--text)}
-    header{height:45vh;background:url(https://i.imgur.com/8N8SpBf.gif) center/cover no-repeat;position:relative;display:flex;align-items:center;justify-content:center}
-    header::after{content:"";position:absolute;inset:0;background:#000000aa}
-    h1{position:relative;z-index:2;font-size:8vw;letter-spacing:.05em;background:linear-gradient(90deg,var(--accent),#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    section{padding:3rem 1rem;max-width:900px;margin:auto}
-    h2{margin-bottom:1rem;font-weight:600;font-size:1.4rem;color:var(--accent)}
-    .slider{display:flex;align-items:center;gap:.5rem}
+    header{
+      height:100vh;
+      background:linear-gradient(135deg,var(--neon1),var(--neon2));
+      display:flex;align-items:center;justify-content:center;
+      position:relative;overflow:hidden
+    }
+    header::before{content:"";position:absolute;inset:0;background:url(https://i.imgur.com/8N8SpBf.gif) center/cover no-repeat;mix-blend-mode:multiply;opacity:.3}
+    h1{position:relative;z-index:2;font-size:12vw;font-weight:900;letter-spacing:.1em;background:var(--bg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px var(--neon1)}
+    section{padding:4rem 1rem;max-width:1100px;margin:auto}
+    h2{margin-bottom:1.5rem;font-size:2rem;font-weight:800;background:linear-gradient(90deg,var(--neon1),var(--neon2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    /* неон-кнопки */
+    .neon-btn{
+      background:transparent;
+      border:2px solid var(--neon1);
+      color:var(--neon1);
+      padding:14px 28px;
+      font-weight:700;
+      border-radius:6px;
+      box-shadow:0 0 15px var(--neon1), inset 0 0 5px var(--neon1);
+      transition:.3s;
+      cursor:pointer;
+      margin:.25rem
+    }
+    .neon-btn:hover{background:#00f2ff22;box-shadow:0 0 30px var(--neon1), inset 0 0 10px var(--neon1)}
+    .neon-btn.pink{border-color:var(--neon2);color:var(--neon2);box-shadow:0 0 15px var(--neon2), inset 0 0 5px var(--neon2)}
+    .neon-btn.pink:hover{background:#ff00c822;box-shadow:0 0 30px var(--neon2), inset 0 0 10px var(--neon2)}
+    /* слайдер */
+    .slider{display:flex;align-items:center;gap:.5rem;margin:1.5rem 0}
     .years{flex:1;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
     .years::-webkit-scrollbar{display:none}
-    .year{flex:0 0 28%;scroll-snap-align:start;background:var(--pane);border:1px solid #222;border-radius:8px;padding:1rem;text-align:center;cursor:pointer;transition:.3s}
-    .year:hover{border-color:var(--accent);transform:translateY(-3px)}
-    .info{margin-top:1.2rem;padding:1rem;background:#00000066;border-left:3px solid var(--accent);border-radius:4px;font-size:.95rem;display:none}
+    .year{flex:0 0 30%;scroll-snap-align:start;background:var(--pane);border:1px solid #222;border-radius:8px;padding:1.2rem;text-align:center;cursor:pointer;transition:.3s;position:relative}
+    .year:hover{border-color:var(--neon1);transform:translateY(-5px)}
+    .year active{border-color:var(--neon2)}
+    .info{margin-top:1.5rem;padding:1.2rem;background:#00000066;border-left:4px solid var(--neon1);border-radius:6px;font-size:.95rem;display:none}
     .info.show{display:block}
-    .gallery{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.5rem}
-    .gallery img{width:calc(20% - 8px);min-width:100px;border-radius:6px;transition:.3s;filter:grayscale(.2);loading:lazy}
-    .gallery img:hover{transform:scale(1.05);filter:none}
-    #sound{position:fixed;bottom:20px;right:20px;width:50px;height:50px;background:var(--pane);border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;z-index:100}
-    footer{text-align:center;padding:2rem .5rem;font-size:.75rem;color:#777}
-    @media(max-width:600px){.year{flex:0 0 40%}.gallery img{width:calc(50% - 8px)}}
+    /* галерея */
+    .gallery{display:flex;overflow-x:auto;gap:12px;padding:1rem 0}
+    .gallery img{height:160px;border-radius:8px;border:2px solid transparent;transition:.3s;filter:grayscale(.3)}
+    .gallery img:hover{border-color:var(--neon1);transform:scale(1.05);filter:none}
+    /* футер */
+    footer{text-align:center;padding:2.5rem .5rem;font-size:.8rem;color:#555}
+    /* адаптив */
+    @media(max-width:600px){.year{flex:0 0 45%}.gallery img{height:120px}}
   </style>
-  <!-- Google Analytics 4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
-    gtag('js',new Date());gtag('config','G-XXXXXXXXXX')
-  </script>
 </head>
 <body>
 
-<header><h1>2D Evolution</h1></header>
+<header><h1>2D EVOLUTION</h1></header>
 
 <section>
   <h2>Годы и перемены</h2>
   <div class="slider">
-    <button onclick="slide(-1)">‹</button>
+    <button class="neon-btn" onclick="slide(-1)">‹</button>
     <div class="years" id="years"></div>
-    <button onclick="slide(1)">›</button>
+    <button class="neon-btn" onclick="slide(1)">›</button>
   </div>
   <div class="info" id="info"></div>
 </section>
 
 <section>
-  <h2>Культовые игры в лицах</h2>
+  <h2>Культовые постеры</h2>
   <div class="gallery" id="gallery"></div>
 </section>
 
 <section>
   <h2>Мои 2D-проекты</h2>
-  <p>Скоро здесь появятся мои собственные пиксель-игры. Подпишись на обновления!</p>
+  <p>Добавлю сюда свои игры. Пока жми кнопку – услышишь 8-бит звук.</p>
+  <button class="neon-btn pink" onclick="toggleSound()">LAUNCH DEMO</button>
 </section>
 
 <footer>
-  <a href="https://github.com/Pulse111-art/2d-gamess" target="_blank">GitHub</a> ·
-  <a href="mailto:you@2dgames.site">Связаться</a>
+  <a href="https://github.com/Pulse111-art/2d-gamess" target="_blank" class="neon-btn">GitHub</a>
+  <a href="mailto:you@2dgames.site" class="neon-btn">Contact</a>
 </footer>
-
-<div id="sound" onclick="toggleSound()">🔊</div>
 
 <script>
   const yearsData=[
-    {y:1980,txt:"Рождение аркадного золота",info:"Pac-Man, Space Invaders – монетки, 8×8 спрайты, 4 цвета. Заложены основы AI врагов и UI."},
-    {y:1985,txt:"Коды, джойстики, скроллинг",info:"Super Mario Bros. – первый side-scroll, физика прыжка, коды Конами. Начало NES-эры."},
-    {y:1990,txt:"16-бит, параллакс, Mode-7",info:"Sonic, Super Mario World – 256 цветов, PCM-звук, вращение фона. Рождение жанра beat-’em-up."},
-    {y:1995,txt:"Псевдо-3D на 2D",info:"Donkey Kong Country –预рендер, Super Mario RPG – изометрия+спрайты. CD-саундтреки."},
-    {y:2000,txt:"Flash-революция",info:"Newgrounds, Kongregate – бесплатные браузерные 2D, векторная графика, пиксель-арт возвращается."},
-    {y:2005,txt:"HD-2D, порталы, физика",info:"LocoRoco – 2D + soft-body, Portal: The Flash Version – порталы в 2D. Xbox Live Arcade."},
-    {y:2010,txt:"Инди-бум",info:"Super Meat Boy, Limbo – цифровая дистрибуция, Kickstarter, ретро-эстетика в HD."},
-    {y:2015,txt:"1.2D + нормальные карты",info:"FEZ, Ori – 3D-свет на 2D-спрайтах, нормал-мапы, 60 fps на всех платформах."},
-    {y:2020,txt:"AI-апскейл, 120 fps",info:"Dead Cells, Hollow Knight – HDR-спрайты, procedural анимация, 1.2D-ray-tracing на Switch."},
-    {y:2025,txt:"Рей-трейсинг и hand-drawn AI",info:"Ultros, Animal Well – hand-drawn кадры, AI-инбетвининг, 4K-спрайты, 240 fps на OLED."}
+    {y:1980,txt:"1980",info:"Pac-Man, Space Invaders – 8×4 спрайты, 4 цвета. Родились AI врагов и монетки."},
+    {y:1985,txt:"1985",info:"Super Mario Bros. – side-scroll, физика прыжка, коды Конами. Начало NES-эры."},
+    {y:1990,txt:"1990",info:"Sonic, Mario World – 256 цветов, PCM-звук, Mode-7. Параллакс и beat-’em-up."},
+    {y:1995,txt:"1995",info:"Donkey Kong Country –预рендер, Super Mario RPG – изометрия. CD-саунд."},
+    {y:2000,txt:"2000",info:"Flash-игры, Newgrounds, векторная 2D, пиксель-арт возвращается."},
+    {y:2005,txt:"2005",info:"LocoRoco – 2D soft-body, Portal Flash – порталы в 2D. Xbox Live Arcade."},
+    {y:2010,txt:"2010",info:"Super Meat Boy, Limbo – цифро-релизы, Kickstarter, HD-пиксель."},
+    {y:2015,txt:"2015",info:"FEZ, Ori – 3D-свет на 2D, normal-map, 60 fps на всём."},
+    {y:2020,txt:"2020",info:"Dead Cells, Hollow Knight – HDR-спрайты, procedural anim, 120 fps."},
+    {y:2025,txt:"2025",info:"Ultros, Animal Well – hand-drawn + AI, 4K, 240 fps OLED."}
   ];
 
   const years=document.getElementById('years');
